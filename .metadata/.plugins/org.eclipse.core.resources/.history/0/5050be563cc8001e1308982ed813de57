@@ -1,0 +1,15 @@
+package com.app.services;
+
+import java.util.List;
+
+import com.app.pojos.Users;
+
+public class UsersServiceImpl implements IUsersService{
+
+	@Override
+	public List<Users> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
