@@ -76,13 +76,24 @@ public class UsersRestController {
 						HttpStatus.BAD_REQUEST);
 			}
 	}
-	
-	@PutMapping
+	//add REST API to update existing user details
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateUSerDetails(@RequestBody Users detachedUSer,@PathVariable long id)
 	{
 		System.out.println("in update user "+detachedUSer + " "+ id);
-		Users existingUser=userService.getDetails(id) 
-		return null;
+		try {
+		//invoke service layer method for validating user id
+		Users existingUser=userService.getDetails(id);
+		//=>user is valid 
+		//existingUser=> user details fetched from DB(stale)
+		//detachedUSer=>updated user details from front end.
+		return ResponseEntity.ok(userService.updateDetails(detachedUSer));
+		}catch(RuntimeException e)
+		{
+			System.out.println("err in add "+e);
+			return new ResponseEntity<>( new ErrorResponse("Updating user details failed!!!!!",e.getMessage() ),
+					HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	

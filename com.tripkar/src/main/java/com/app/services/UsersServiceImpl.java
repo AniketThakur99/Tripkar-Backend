@@ -16,8 +16,8 @@ import com.app.pojos.Users;
 public class UsersServiceImpl implements IUsersService{
 
 
-
 	
+
 
 	//dependency:dao layer i/f
 	@Autowired 
@@ -27,14 +27,13 @@ public class UsersServiceImpl implements IUsersService{
 	@Override
 	public List<Users> getAllUsers() {
 		//invoke dao's method
-		
 		return userRepo.findAll();
 	}
 
 	
 	@Override
 	public Users addUser(Users user) {
-		System.out.println("in service method "+user);
+		//System.out.println("in service method "+user);
 		return userRepo.save(user);  
 	}
 	
@@ -50,5 +49,11 @@ public class UsersServiceImpl implements IUsersService{
 		 
 		return userRepo.findById(userId).
 				orElseThrow(()->new UserHandlingException("Invalid user ID"));
+	}
+	
+	@Override
+	public Users updateDetails(Users detachedUSer) {
+		
+		return userRepo.save(detachedUSer);
 	}
 }

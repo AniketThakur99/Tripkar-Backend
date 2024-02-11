@@ -9,5 +9,6 @@ public interface IUsersService {
 	Users addUser(Users user);
 	String deleteUser(long userId);
 	Users getDetails(long userId);
+	Users updateDetails(Users detachedUSer);
 	
 }
