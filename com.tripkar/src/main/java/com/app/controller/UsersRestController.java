@@ -41,7 +41,7 @@ public class UsersRestController {
 	@PostMapping
 	public ResponseEntity<?> addNewUserDetails(@RequestBody Users transientUser)
 	{
-		System.out.println("in add user "+transientUser.toString());
+		System.out.println("in add user "+transientUser);
 		//invoke service layer's method for saving details
 		try {
 		return new ResponseEntity<>( userService.addUser(transientUser),HttpStatus.CREATED);
@@ -58,7 +58,7 @@ public class UsersRestController {
 	public ResponseEntity<ResponseDTO> deleteUserDetails(@PathVariable int userId)//(@PathVariable(name="userId")int id)
 	{
 		System.out.println("in delete user details " +userId);
-		//invoke service layer method for deleting user de tails
+		//invoke service layer method for deleting user details
 		//return new ResponseEntity<>(new ResponseDTO( userService.deleteUser(userId)),HttpStatus.OK);
 		return ResponseEntity.ok(new ResponseDTO( userService.deleteUser(userId)));
 	}
