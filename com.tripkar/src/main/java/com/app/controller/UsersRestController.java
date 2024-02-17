@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.ErrorResponse;
 import com.app.dto.ResponseDTO;
+import com.app.pojos.Address;
 import com.app.pojos.Users;
 import com.app.services.IUsersService;
 
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://[::1]:3000")
 public class UsersRestController {
 	//dependency :service layer i/f
 	@Autowired
@@ -38,20 +42,7 @@ public class UsersRestController {
 		return userService.getAllUsers();
 	}
 	
-	@PostMapping
-	public ResponseEntity<?> addNewUserDetails(@RequestBody Users transientUser)
-	{
-		System.out.println("in add user "+transientUser);
-		//invoke service layer's method for saving details
-		try {
-		return new ResponseEntity<>( userService.addUser(transientUser),HttpStatus.CREATED);
-		}catch(RuntimeException e)
-		{
-			System.out.println("err in add "+e);
-			return new ResponseEntity<>( new ErrorResponse("Adding user failed!!!!!",e.getMessage() ),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	
 	
 	//add RESt API to delete user details by id 
 	@DeleteMapping("/{userId}")
@@ -68,6 +59,7 @@ public class UsersRestController {
 	{
 		System.out.println("in get user detail by id "+id);
 		try {
+				//Address address=new Address();
 				return ResponseEntity.ok(userService.getDetails(id));
 			}catch(RuntimeException e)
 			{
@@ -95,6 +87,51 @@ public class UsersRestController {
 					HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
+
+	
+	
+	@PostMapping
+	public ResponseEntity<?> addNewUserDetails(@Validated @RequestBody Users transientUser)
+	{
+		System.out.println("in add user "+transientUser);
+		Address address= new Address();
+		Users user=new Users(transientUser.getUserName(),transientUser.getEmail(),transientUser.getPassword(),transientUser.getMobNumber());
+		address.setStreet(transientUser.getStreet());
+		address.setCity(transientUser.getCity());
+		address.setPincode(transientUser.getPincode());
+		
+		address.setUser(user);
+		user.setAddress(address);
+		//invoke service layer's method for saving details
+		try {
+			Users users = userService.addUser(user);
+		return new ResponseEntity<>( users,HttpStatus.CREATED);
+		}catch(RuntimeException e)
+		{
+			System.out.println("err in add "+e);
+			return new ResponseEntity<>( new ErrorResponse("Adding user failed!!!!!",e.getMessage() ),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+//	@PostMapping("/login")
+//	public ResponseEntity<Boolean> loginDealer(@Validated @RequestBody Users user) throws ResourceNotFoundException {
+//		Boolean isAuthenticated = false;
+//		String email = user.getEmail();
+//		String password = user.getPassword();
+//
+//		Users u = userService.
+//				.orElseThrow(() -> new ResourceNotFoundException("Dealer not found for this email :: " + email));
+//
+//		if (email.equals(d.getEmail()) && password.equals(d.getPassword())) {
+//			isAuthenticated = true;
+//
+//		}
+//		return ResponseEntity.ok(isAuthenticated);
+//	}
 	
 	
 	
