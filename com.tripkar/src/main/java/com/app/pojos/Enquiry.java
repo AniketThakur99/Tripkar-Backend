@@ -1,5 +1,7 @@
 package com.app.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -24,6 +26,8 @@ public class Enquiry extends BaseEntity{
 	@Column(length=500)
 	private String message;
 	
+	
+	@JsonIgnore
 	@ManyToOne
 	Users user;
 }

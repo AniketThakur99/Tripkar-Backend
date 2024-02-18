@@ -3,8 +3,8 @@ INDEX VERSION 1.134+D:\PG-DAC_2023\Project\Tripkar-Backend\.metadata\.plugins\or
 3242986247.index
 836254038.index
 3081561275.index
-3041067153.index
 2956941535.index
+3041067153.index
 1672107509.index
 1802213082.index
 500561454.index
@@ -17,8 +17,8 @@ INDEX VERSION 1.134+D:\PG-DAC_2023\Project\Tripkar-Backend\.metadata\.plugins\or
 457874949.index
 2485052905.index
 265274622.index
-4005132856.index
 494716283.index
+4005132856.index
 4208852272.index
 3565521729.index
 2821495255.index
@@ -32,8 +32,8 @@ INDEX VERSION 1.134+D:\PG-DAC_2023\Project\Tripkar-Backend\.metadata\.plugins\or
 3806166421.index
 3132496096.index
 2589897562.index
-2440620983.index
 2321289959.index
+2440620983.index
 3250419488.index
 3440503764.index
 3078765043.index
@@ -53,11 +53,11 @@ INDEX VERSION 1.134+D:\PG-DAC_2023\Project\Tripkar-Backend\.metadata\.plugins\or
 3583339825.index
 3509230205.index
 703088468.index
-3548094429.index
 1580931854.index
+3548094429.index
 1520865842.index
-816145694.index
 3078316390.index
+816145694.index
 2918699060.index
 2277249697.index
 2223106031.index

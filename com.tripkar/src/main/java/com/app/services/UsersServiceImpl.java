@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_exception.UserHandlingException;
 import com.app.dao.UsersRepository;
+import com.app.dto.ValidateUser;
 import com.app.pojos.Users;
 
 
@@ -56,4 +57,14 @@ public class UsersServiceImpl implements IUsersService{
 		
 		return userRepo.save(detachedUSer);
 	}
+	
+	
+	
+	@Override
+	public Users validateUser(ValidateUser user) {
+		
+		return userRepo.findByemail( user.getEmail());
+	}
+	
+	
 }

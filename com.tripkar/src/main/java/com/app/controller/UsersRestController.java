@@ -18,28 +18,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.ErrorResponse;
 import com.app.dto.ResponseDTO;
+import com.app.dto.ValidateUser;
 import com.app.pojos.Address;
 import com.app.pojos.Users;
 import com.app.services.IUsersService;
+
 
 
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://[::1]:3000")
 public class UsersRestController {
+	
+	
 	//dependency :service layer i/f
 	@Autowired
 	private IUsersService userService;
+	
+	
+	
+	
+	
 	public UsersRestController() {
 		System.out.println("in ctor "+getClass().getName());
 		
 	}
+	
+	
+	
+	
 	//add REST API endpoint : for getting all users
 	@GetMapping
-	public List<Users> fetchAllUSers()
+	public ResponseEntity<List<Users>> fetchAllUSers()
 	{
+		List<Users> users=userService.getAllUsers();
 		System.out.println("in fetch all users");
-		return userService.getAllUsers();
+		return ResponseEntity.ok(users);
 	}
 	
 	
@@ -53,6 +67,11 @@ public class UsersRestController {
 		//return new ResponseEntity<>(new ResponseDTO( userService.deleteUser(userId)),HttpStatus.OK);
 		return ResponseEntity.ok(new ResponseDTO( userService.deleteUser(userId)));
 	}
+	
+	
+	
+	
+	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserDetails(@PathVariable long id)
@@ -68,6 +87,13 @@ public class UsersRestController {
 						HttpStatus.BAD_REQUEST);
 			}
 	}
+	
+	
+	
+	
+	
+	
+	
 	//add REST API to update existing user details
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateUSerDetails(@RequestBody Users detachedUSer,@PathVariable long id)
@@ -89,6 +115,24 @@ public class UsersRestController {
 	}
 	
 	
+	
+	
+	
+	@PostMapping("/validate")
+	public ResponseEntity<?> validateUser(@RequestBody ValidateUser transientUser )
+	{
+		System.out.println("inside validate user");
+			Users user=userService.validateUser(transientUser);
+			System.out.println(user.getEmail());
+			 if (user != null && user.getPassword().equals(transientUser.getPassword())) {
+		            return ResponseEntity.ok("Login successful");
+		        } else {
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+		        }
+		
+	}
+	
+	
 
 	
 	
@@ -102,7 +146,7 @@ public class UsersRestController {
 		address.setCity(transientUser.getCity());
 		address.setPincode(transientUser.getPincode());
 		
-		address.setUser(user);
+		//address.setUser(user);
 		user.setAddress(address);
 		//invoke service layer's method for saving details
 		try {
@@ -115,23 +159,6 @@ public class UsersRestController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
-//	@PostMapping("/login")
-//	public ResponseEntity<Boolean> loginDealer(@Validated @RequestBody Users user) throws ResourceNotFoundException {
-//		Boolean isAuthenticated = false;
-//		String email = user.getEmail();
-//		String password = user.getPassword();
-//
-//		Users u = userService.
-//				.orElseThrow(() -> new ResourceNotFoundException("Dealer not found for this email :: " + email));
-//
-//		if (email.equals(d.getEmail()) && password.equals(d.getPassword())) {
-//			isAuthenticated = true;
-//
-//		}
-//		return ResponseEntity.ok(isAuthenticated);
-//	}
 	
 	
 	

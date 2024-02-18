@@ -2,6 +2,8 @@ package com.app.pojos;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
@@ -31,7 +33,7 @@ public class TripsBooking extends BaseEntity{
 	@Transient
 	private int userId;
 	
-	
+	@JsonIgnore
 	@ManyToOne
 	Users user;
 	

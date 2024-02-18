@@ -1,5 +1,7 @@
 package com.app.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,24 +18,17 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Address extends BaseEntity{
+public class Address extends BaseEntity {
 	private @NonNull String street;
 	private @NonNull String city;
 	private int pincode;
+ 
 	
 	// Foreign key
-		@OneToOne
-		Users user;
-
-	public Address(String street, String city, int pincode) {
-		super();
-		this.street = street;
-		this.city = city;
-		this.pincode = pincode;
-	}
+	@JsonIgnore
+	@OneToOne
+	Users user;
 
 	
-		
-		
-		
+
 }

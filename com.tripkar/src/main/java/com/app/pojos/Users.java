@@ -59,14 +59,18 @@ public class Users extends BaseEntity {
 		this.password = password;
 		this.mobNumber = mobNumber;
 	}
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	List<Enquiry> enquries;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	List<TripsBooking> bookings;
+	
+	
 	@JsonIgnore
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch=FetchType.EAGER)//
+	List<TripsBooking> bookings;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)//mappedBy = "user",
 	Address address;
 
 	public void setPassword(String password) {
