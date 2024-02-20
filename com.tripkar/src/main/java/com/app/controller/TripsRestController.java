@@ -136,6 +136,7 @@ public class TripsRestController {
 			InputStream resource = new FileInputStream(fullPath);
 			byte[] imageData = StreamUtils.copyToByteArray(resource);
 			
+			
 			Map<String, Object> responseBody = new HashMap<>();
 			responseBody.put("details", details);
 			responseBody.put("imageData", imageData);
