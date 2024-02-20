@@ -128,9 +128,17 @@ public class TripsRestController {
 			String imageName=deatils.getImage();
 			String fullPath=path+File.separator+imageName;
 			System.out.println("full path "+fullPath);
-			InputStream resource=new FileInputStream(fullPath);
-			//response.setContentType(MediaType.);
-			StreamUtils.copy(resource, response.getOutputStream());
+			// InputStream resource=new FileInputStream(fullPath);
+			// //response.setContentType(MediaType.);
+			// StreamUtils.copy(resource, response.getOutputStream());
+
+			// Read image data
+			InputStream resource = new FileInputStream(fullPath);
+			byte[] imageData = StreamUtils.copyToByteArray(resource);
+			
+			Map<String, Object> responseBody = new HashMap<>();
+			responseBody.put("details", details);
+			responseBody.put("imageData", imageData);
 
 			
 //			Path uploadDirectory=Paths.get(path);
@@ -150,7 +158,8 @@ public class TripsRestController {
 //			});
 			
 			//System.out.println(uploadDirectory);
-				return ResponseEntity.ok(deatils);
+			return ResponseEntity.ok(responseBody);
+
 			}catch(RuntimeException e)
 			{
 				System.out.println("err in Destination get by id "+e);
